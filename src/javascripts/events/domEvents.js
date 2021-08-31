@@ -14,6 +14,7 @@ import {
   getSingleAuthor,
   updateAuthor
 } from '../helpers/data/authorData';
+import viewBook from '../components/viewBook';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -64,6 +65,7 @@ const domEvents = () => {
         price: document.querySelector('#price').value,
         sale: document.querySelector('#sale').checked,
         author_id: document.querySelector('#author_id').value,
+        description: document.querySelector('#description').value,
         firebaseKey
       };
 
@@ -94,7 +96,7 @@ const domEvents = () => {
         email: document.querySelector('#email').value,
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
-        favorite: document.querySelector('#favorite').checked,
+        favorite: document.querySelector('#favorite').checked
       };
 
       createAuthor(authorObject).then(showAuthors);
@@ -118,6 +120,10 @@ const domEvents = () => {
       };
 
       updateAuthor(authorObject).then(showAuthors);
+    }
+    if (e.target.id.includes('view-book-btn')) {
+      const [, firebaseKey] = e.target.id.split('--');
+      getSingleBook(firebaseKey).then(viewBook);
     }
   });
 };
