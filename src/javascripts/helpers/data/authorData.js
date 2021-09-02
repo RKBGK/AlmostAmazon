@@ -52,11 +52,28 @@ const favoriteAuthor = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+// GET AUTHOR BOOKS
+const getAuthorbooks = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/books.json?orderBy="author_id"&equalTo=${firebaseKey}`)
+    .then((response) => resolve(Object.values(response.data)))
+    .catch(reject);
+});
+
+// DELETE SINGLE AUTHOR
+const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.delete(`${dbUrl}/authors/${firebaseKey}.json`)
+    .then(() => {
+      getAuthors().then(resolve);
+    }).catch(reject);
+});
+
 export {
   getAuthors,
   deleteAuthor,
   createAuthor,
   getSingleAuthor,
   updateAuthor,
-  favoriteAuthor
+  favoriteAuthor,
+  deleteSingleAuthor,
+  getAuthorbooks
 };

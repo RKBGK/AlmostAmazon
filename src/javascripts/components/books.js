@@ -1,4 +1,7 @@
+import clearDom from '../helpers/data/clearDom';
+
 const showBooks = (array) => {
+  clearDom();
   document.querySelector('#add-button').innerHTML = '<button class="btn btn-success btn-lg mb-4" id="add-book-btn">Add A Book</button>';
 
   document.querySelector('#store').innerHTML = '';
@@ -14,7 +17,7 @@ const showBooks = (array) => {
             <hr>
             <i class="btn btn-success fas fa-eye" id="view-book-btn--${item.firebaseKey}"></i>
             <i id="edit-book-btn--${item.firebaseKey}" class="fas fa-edit btn btn-info"></i>
-            <i id="delete-book--${item.firebaseKey}" class="btn btn-danger fas fa-trash-alt"></i>
+            <i id="delete-book-btn--${item.firebaseKey}" class="btn btn-danger fas fa-trash-alt"></i>
         </div>
       </div>`;
   });
