@@ -9,11 +9,14 @@ import { showBooks } from '../components/books';
 import addAuthorForm from '../components/forms/addAuthorForm';
 import { showAuthors } from '../components/authors';
 import {
-  deleteAuthor,
+  // deleteAuthor,
   createAuthor,
   getSingleAuthor,
-  updateAuthor
+  updateAuthor,
+  deleteSingleAuthor
 } from '../helpers/data/authorData';
+import viewBook from '../components/viewBook';
+import { viewBookDetails } from '../helpers/data/mergedData';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -64,6 +67,7 @@ const domEvents = () => {
         price: document.querySelector('#price').value,
         sale: document.querySelector('#sale').checked,
         author_id: document.querySelector('#author_id').value,
+        description: document.querySelector('#description').value,
         firebaseKey
       };
 
@@ -73,12 +77,12 @@ const domEvents = () => {
     // ADD CLICK EVENT FOR DELETING AN AUTHOR
     if (e.target.id.includes('delete-author')) {
       // eslint-disable-next-line no-alert
-      if (window.confirm('Want to delete?')) {
+      if (window.confirm('Want to delete and books?')) {
         console.warn('CLICKED DELETE AUTHOR', e.target.id);
         console.warn(e.target.id.split('--'));
         const [, id] = e.target.id.split('--');
 
-        deleteAuthor(id).then(showAuthors);
+        // deleteSingleAuthor(id).then(showAuthors);
       }
     }
 
@@ -94,7 +98,7 @@ const domEvents = () => {
         email: document.querySelector('#email').value,
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
-        favorite: document.querySelector('#favorite').checked,
+        favorite: document.querySelector('#favorite').checked
       };
 
       createAuthor(authorObject).then(showAuthors);
@@ -116,8 +120,18 @@ const domEvents = () => {
         favorite: document.querySelector('#favorite').checked,
         firebaseKey
       };
-
       updateAuthor(authorObject).then(showAuthors);
+    }
+
+    if (e.target.id.includes('view-book-btn')) {
+      const [, firebaseKey] = e.target.id.split('--');
+      viewBookDetails(firebaseKey).then(viewBook);
+    }
+
+    if (e.target.id.includes('view-author-btn')) {
+      console.warn('test');
+      // const [, firebaseKey] = e.target.id.split('--');
+      // viewAuthorDetails(firebaseKey).then(viewAuthor);
     }
   });
 };
